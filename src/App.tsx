@@ -1,19 +1,30 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query'
+import Header from './header/Header'
+import Dashboard from './components/Dashboard'
+import AddProject from './components/project/AddProject'
+import UpdateProject from './components/project/UpdateProject'
+import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-import { Navbar } from './components/Navbar'
-import { About } from './pages/About'
-import { Home } from './pages/Home'
+const queryClient = new QueryClient()
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <BrowserRouter>
-      <Navbar />
-      <div className="container">
-        <Switch>
-          <Route path="/" component={Home} exact />
-          <Route path="/about" component={About} />
-        </Switch>
+      <Header />
+      <div className="App">
+        <QueryClientProvider client={queryClient}>
+          <Switch>
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/addProject" component={AddProject} />
+            <Route exact path="/updateProject/:id" component={UpdateProject} />
+          </Switch>
+        </QueryClientProvider>
       </div>
     </BrowserRouter>
   )
